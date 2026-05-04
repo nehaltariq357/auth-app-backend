@@ -7,8 +7,9 @@ const app_js_1 = __importDefault(require("./app.js"));
 const db_js_1 = __importDefault(require("./config/db.js"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+const PORT = process.env.PORT;
 (0, db_js_1.default)().then(() => {
-    app_js_1.default.listen(3000, () => {
-        console.log("Server running on http://localhost:3000");
+    app_js_1.default.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
     });
 });
