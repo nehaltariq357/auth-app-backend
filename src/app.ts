@@ -8,7 +8,7 @@ const app = express();
 app.use(cookieParser());
 
 app.use(cors({
-    origin:"http://localhost:3001", // allow to access from client side
+    origin:process.env.FRONTEND_URL, // allow to access from client side
     credentials:true, 
     methods:["GET","POST","PUT","DELETE"]
 }))
