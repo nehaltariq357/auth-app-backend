@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import e, { Request, Response } from "express"
 import User from "../model/auth"
 import bcrypt from "bcrypt"
 import { generateAccessToken, generateRefreshToken } from "../utlis/jwt"
@@ -55,14 +55,14 @@ const login = async (req: Request, res: Response) => {
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,  // set to true in production
+            sameSite: "none",  // set to "none" in production
 
         })
         res.cookie("refreshToken", refreshToken, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            httpOnly: true, // set to true in production
+            secure: true,   // set to true in production
+            sameSite: "none",   // set to "none" in production
 
         })
         res.status(200).json({
@@ -72,7 +72,7 @@ const login = async (req: Request, res: Response) => {
             }
         })
     } catch (error) {
-        res.status(500).json({ message: "Internal server error" })
+        res.status(500).json({ message: error instanceof Error ? error.message : "Internal server error" })
     }
 }
 
