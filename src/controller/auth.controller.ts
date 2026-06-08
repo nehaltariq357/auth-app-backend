@@ -47,7 +47,7 @@ const login = async (req: Request, res: Response) => {
         if (!isPasswordValid) {
             return res.status(400).json({ message: "Invalid credentials" })
         }
-
+        // generate tokens // access token and refresh token 
         const accessToken = generateAccessToken(user._id.toString())
         const refreshToken = generateRefreshToken(user._id.toString())
 
@@ -68,7 +68,7 @@ const login = async (req: Request, res: Response) => {
         res.status(200).json({
             message: "Login successful", user: {
                 id: user._id,
-                email: user.email
+                email: user.email   
             }
         })
     } catch (error) {

@@ -16,8 +16,9 @@ const refreshToken= async (req:Request, res:Response) => {
       return res.status(401).json({ message: "No refresh token" });
     }
 
+    // verify token and get user id from token
     const decoded = jwt.verify(token,secret! );
-
+    // find user by id from token payload
     const user = await User.findById((decoded as jwt.JwtPayload).id);
 
     if (!user) {
@@ -28,7 +29,8 @@ const refreshToken= async (req:Request, res:Response) => {
 
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
-      secure: false
+      secure: false,
+      sameSite: "lax",
     });
 
     res.json({ message: "Token refreshed" });
